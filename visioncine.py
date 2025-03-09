@@ -30,6 +30,10 @@ def get_poster_url(text):
     return result.group(1).replace("'", "")
 
 
+def kebab_id(id: str):
+    return casefy.kebabcase(id.replace("vsc", "", 1))
+
+
 def catalog_search(q: str):
     search_url = f"https://www.visioncine-1.com/search.php?q={q}"
 
@@ -60,7 +64,7 @@ def catalog_search(q: str):
 
 
 def get_meta(id: str):
-    url = f"https://www.visioncine-1.com/watch/{casefy.kebabcase(id.replace("vsc", "", 1))}"
+    url = f"https://www.visioncine-1.com/watch/{kebab_id(id)}"
     r = requests.get(url)
     soup = BeautifulSoup(r.text, "html.parser")
 
@@ -124,7 +128,7 @@ def get_series_episodes(id: str, seasons: list[str]):
 
 
 def get_movie_streams(id: str):
-    movie_page_url = f"https://www.visioncine-1.com/watch/{casefy.kebabcase(id.replace("vsc", "", 1))}"
+    movie_page_url = f"https://www.visioncine-1.com/watch/{kebab_id(id)}"
     r = requests.get(movie_page_url)
     soup = BeautifulSoup(r.text, "html.parser")
 
@@ -149,7 +153,7 @@ def get_series_streams(id: str):
 
 
 def get_season_id(id: str, season: int):
-    url = f"https://www.visioncine-1.com/watch/{casefy.kebabcase(id.replace("vsc", "", 1))}"
+    url = f"https://www.visioncine-1.com/watch/{kebab_id(id)}"
 
     r = requests.get(url)
     soup = BeautifulSoup(r.text, "html.parser")
